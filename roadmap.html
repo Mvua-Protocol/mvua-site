@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Roadmap and status | Mvua Protocol</title>
+  <meta name="description" content="Where Mvua Protocol is now and what comes next: the contract core is built and released, a live testnet season is in progress, and mainnet stays behind an external audit and a full beta season.">
+  <meta name="theme-color" content="#F5EFE6">
+  <link rel="icon" href="assets/img/logo-mark.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Mulish:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/mvua.css">
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("mvua-theme");
+        if (t === "dark" || (!t && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+          document.documentElement.classList.add("dark");
+        }
+      } catch (e) {}
+      document.documentElement.classList.remove("no-js");
+    })();
+  </script>
+</head>
+<body>
+
+  <a class="btn btn-secondary" href="#main" style="position:absolute;left:-9999px;top:0.75rem;z-index:999" onfocus="this.style.left='0.75rem'" onblur="this.style.left='-9999px'">Skip to content</a>
+
+  <header class="site-header">
+    <div class="bar">
+      <a class="brand" href="index.html" aria-label="Mvua Protocol home">
+        <img src="assets/img/logo-mark.svg" alt="" aria-hidden="true">
+        <span><span class="mvua">Mvua</span> <span class="proto">Protocol</span></span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="architecture.html">Architecture</a>
+        <a href="docs/index.html">Docs</a>
+        <a href="roadmap.html">Roadmap</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="theme-toggle" data-theme-toggle aria-label="Switch to dark theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"/></svg>
+        </button>
+        <a class="btn btn-primary" href="docs/index.html">Read the docs</a>
+        <button class="nav-toggle" data-nav-toggle aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile">
+    <a href="index.html">Home</a>
+    <a href="architecture.html">Architecture</a>
+    <a href="docs/index.html">Docs</a>
+    <a href="roadmap.html">Roadmap</a>
+    <div class="menu-foot">
+      <span>Theme</span>
+      <button class="theme-toggle" data-theme-toggle aria-label="Switch to dark theme">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <main id="main">
+
+    <section class="page-intro">
+      <div class="container">
+        <p class="kicker">Roadmap</p>
+        <h1>Where Mvua is now</h1>
+        <p class="lead">Mvua is built in phases, and each phase is gated on the one before it. The contract core is written, tested, and released. A live testnet season is the work in front of us today. Mainnet sits behind an external audit and a full beta season on purpose: an insurance product that pays the wrong amount is worse than one that does not exist yet.</p>
+      </div>
+    </section>
+
+    <!-- Honest status -->
+    <section class="section-tight">
+      <div class="container">
+        <div class="status-strip">
+          <div class="status-text">
+            <span class="pill pill-live">In progress</span>
+            <h3>Testnet season in flight</h3>
+            <p>The five contracts are deployed to Stellar testnet and a real season is running against wall-clock time, which is the only way to exercise the publisher timelock and the challenge window honestly. Findings from this run feed the next release.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Phase timeline -->
+    <section class="section">
+      <div class="container">
+        <h2>The phases</h2>
+        <p class="lead" style="max-width:62ch">Six phases carry the project from the first line of code to a capped, graduated launch. The list below is the honest state of each, not an aspiration.</p>
+
+        <div class="timeline mt-4">
+
+          <div class="tl-item done">
+            <div class="tl-dot" aria-hidden="true"></div>
+            <div class="tl-body">
+              <div class="tl-head"><h3>Phase 0: Foundation</h3><span class="pill pill-done">Done</span></div>
+              <p>The five repositories, the shared conventions, the decision record process, and continuous integration across all of them. This is the scaffolding everything else sits on: trunk-based development, required review, secret scanning, and a pinned toolchain, so no later phase has to stop and build its own discipline.</p>
+            </div>
+          </div>
+
+          <div class="tl-item done">
+            <div class="tl-dot" aria-hidden="true"></div>
+            <div class="tl-body">
+              <div class="tl-head"><h3>Phase 1: Contract core</h3><span class="pill pill-done">Released v0.2.0</span></div>
+              <p>The five Soroban contracts, their shared library, and the tests that pin their maths. All 120 tests pass, with line coverage in the high nineties across the workspace. The index maths is fixed against golden vectors, the oracle median is gated on two independent publishers, and an end-to-end season is exercised in a deterministic test host. Released as v0.2.0.</p>
+            </div>
+          </div>
+
+          <div class="tl-item active">
+            <div class="tl-dot" aria-hidden="true"></div>
+            <div class="tl-body">
+              <div class="tl-head"><h3>Phase 2: Deployment and operations</h3><span class="pill pill-live">In progress</span></div>
+              <p>The live testnet deploy and the off-chain publisher service that feeds it real weather. This phase proves the protocol against real wall-clock time and real data: the timelock, the challenge window, the median over live feeds, and a complete season from deposit to claim. It is where the provisional parameters meet reality and get corrected.</p>
+              <ul class="tl-list">
+                <li>Live testnet deploy of the five contracts, wired and seeded</li>
+                <li>Publisher service submitting signed observations on a schedule</li>
+                <li>A full season run: policy sold, index evaluated, payout claimed</li>
+                <li>Parameter review against the run before anything is called final</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-dot" aria-hidden="true"></div>
+            <div class="tl-body">
+              <div class="tl-head"><h3>Phase 3: User surfaces</h3><span class="pill pill-planned">Planned</span></div>
+              <p>The farmer-facing ways in. A web application for buying cover and reading a season, and a low-bandwidth channel for the people least served by a smartphone browser. The design target throughout is a farmer who has never used a wallet: buying cover should feel like buying airtime.</p>
+            </div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-dot" aria-hidden="true"></div>
+            <div class="tl-body">
+              <div class="tl-head"><h3>Phase 4: Index and coverage expansion</h3><span class="pill pill-planned">Planned</span></div>
+              <p>More than two ways to describe a failed season, and more regions. Rainfall shortfall and consecutive dry days are the starting definitions; heat, vegetation, and other region-specific indices follow, each backtested before a pool can rely on it. Coverage widens only as the data behind it earns trust.</p>
+            </div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-dot" aria-hidden="true"></div>
+            <div class="tl-body">
+              <div class="tl-head"><h3>Phase 5: External audit</h3><span class="pill pill-planned">Planned</span></div>
+              <p>An independent security firm reviews the contracts, the index maths, and the trust model, and their findings are resolved in public. No amount of internal testing substitutes for an outside adversarial look at code that holds other people's money.</p>
+            </div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-dot" aria-hidden="true"></div>
+            <div class="tl-body">
+              <div class="tl-head"><h3>Phase 6: Full beta season</h3><span class="pill pill-planned">Planned</span></div>
+              <p>A complete season operated the way production would be, still on testnet, with real operational discipline: monitoring, runbooks, incident response, and a real crop calendar. This is the rehearsal that has to go well before a single real shilling is at risk.</p>
+            </div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-dot" aria-hidden="true"></div>
+            <div class="tl-body">
+              <div class="tl-head"><h3>Phase 7: Capped, graduated launch</h3><span class="pill pill-planned">Planned</span></div>
+              <p>Mainnet, introduced with hard caps on pool size, per-policy coverage, and per-season exposure. Caps rise only against written criteria met in the field, never on a date. Growth is earned one notch at a time, because the cost of being wrong is borne by the farmers the protocol exists to protect.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- What this means -->
+    <section class="section">
+      <div class="container">
+        <h2>What the roadmap is, and is not</h2>
+        <div class="grid grid-2" style="gap:clamp(2rem,5vw,4rem)">
+          <div>
+            <p>Every phase above is an execution contract with acceptance criteria, not a slide. A phase closes when its criteria are met and its tests are green, not when a date arrives.</p>
+            <p>That is why there are no target dates on this page. A date would imply the work is predictable to the week, and the honest position is that security work is not. The order is fixed; the calendar is not.</p>
+          </div>
+          <div>
+            <p>Two things are deliberately absent from this page: anything about how the project is funded, and any claim of traction it has not earned.</p>
+            <p>The roadmap is about engineering and governance, and it stays there. If you want to judge the project, read the code, run the tests, and read the decision records that explain why each choice was made.</p>
+          </div>
+        </div>
+
+        <div class="callout callout-note mt-4">
+          <span class="callout-title">The one rule that outranks the roadmap</span>
+          <p>Mainnet is never rushed to hit a milestone. If that ever seems to conflict with a schedule, the schedule loses. The protocol exists to protect smallholder farmers, and a defect that pays the wrong amount harms exactly the people it is meant to help.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Where to go next -->
+    <section class="section-tight">
+      <div class="container">
+        <div class="status-strip">
+          <div class="status-text">
+            <h3>Watch the work, not the promises</h3>
+            <p>The repositories and their commit history are public. That is the most reliable status report the project can offer.</p>
+          </div>
+          <a class="btn btn-primary" href="https://github.com/Mvua-Protocol" target="_blank" rel="noopener">View the org on GitHub</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-card">
+        <div class="footer-top">
+          <div class="footer-brand">
+            <a class="brand" href="index.html">
+              <img src="assets/img/logo-mark.svg" alt="" aria-hidden="true">
+              <span><span class="mvua">Mvua</span> <span class="proto">Protocol</span></span>
+            </a>
+            <p>Parametric climate insurance on Stellar. Farmers get paid automatically when on chain weather data says the season failed.</p>
+            <div class="footer-social">
+              <a href="https://github.com/Mvua-Protocol" aria-label="Mvua Protocol on GitHub" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.94c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.7.08-.7 1.17.08 1.79 1.2 1.79 1.2 1.04 1.79 2.73 1.27 3.4.97.1-.76.4-1.27.74-1.56-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.2-3.1-.12-.3-.52-1.48.11-3.08 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.5 3.17-1.18 3.17-1.18.63 1.6.23 2.78.11 3.08.75.81 1.2 1.84 1.2 3.1 0 4.43-2.7 5.4-5.27 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5z"/></svg>
+              </a>
+              <a href="https://stellar.org" aria-label="Stellar" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3.5 9h17M3.5 15h17"/></svg>
+              </a>
+              <a href="mailto:emedit453@gmail.com" aria-label="Email Mvua Protocol">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+              </a>
+            </div>
+          </div>
+          <div class="footer-cols">
+            <div class="footer-col">
+              <h4>Protocol</h4>
+              <a href="index.html">Home</a>
+              <a href="architecture.html">Architecture</a>
+              <a href="roadmap.html">Roadmap</a>
+            </div>
+            <div class="footer-col">
+              <h4>Documentation</h4>
+              <a href="docs/index.html">Overview</a>
+              <a href="docs/concepts.html">Concepts</a>
+              <a href="docs/protocol.html">Protocol reference</a>
+              <a href="docs/faq.html">FAQ</a>
+            </div>
+            <div class="footer-col">
+              <h4>Code</h4>
+              <a href="https://github.com/Mvua-Protocol/mvua-contract" target="_blank" rel="noopener">mvua-contract</a>
+              <a href="https://github.com/Mvua-Protocol/mvua-app" target="_blank" rel="noopener">mvua-app</a>
+              <a href="https://github.com/Mvua-Protocol" target="_blank" rel="noopener">GitHub org</a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>&copy; 2026 Mvua Protocol. All rights reserved.</span>
+          <span>Built on Stellar with Soroban</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-watermark" aria-hidden="true"><span>MVUA</span></div>
+  </footer>
+
+  <script src="assets/js/mvua.js"></script>
+</body>
+</html>

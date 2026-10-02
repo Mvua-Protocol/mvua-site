@@ -1,0 +1,17 @@
+# Operating system cruft
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Local tooling
+node_modules/
+.vercel/
+.netlify/
+
+# Build output (this site has no build step; kept for safety)
+dist/
+.cache/

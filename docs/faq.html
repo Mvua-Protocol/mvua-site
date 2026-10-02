@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FAQ | Mvua Protocol docs</title>
+  <meta name="description" content="Frequently asked questions about Mvua Protocol: is it real insurance, what is basis risk, what happens if the data is wrong, and what stage the project is at.">
+  <meta name="theme-color" content="#F5EFE6">
+  <link rel="icon" href="../assets/img/logo-mark.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Mulish:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/mvua.css">
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("mvua-theme");
+        if (t === "dark" || (!t && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+          document.documentElement.classList.add("dark");
+        }
+      } catch (e) {}
+      document.documentElement.classList.remove("no-js");
+    })();
+  </script>
+</head>
+<body>
+
+  <a class="btn btn-secondary" href="#main" style="position:absolute;left:-9999px;top:0.75rem;z-index:999" onfocus="this.style.left='0.75rem'" onblur="this.style.left='-9999px'">Skip to content</a>
+
+  <header class="site-header">
+    <div class="bar">
+      <a class="brand" href="../index.html" aria-label="Mvua Protocol home">
+        <img src="../assets/img/logo-mark.svg" alt="" aria-hidden="true">
+        <span><span class="mvua">Mvua</span> <span class="proto">Protocol</span></span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="../index.html">Home</a>
+        <a href="../architecture.html">Architecture</a>
+        <a href="index.html">Docs</a>
+        <a href="../roadmap.html">Roadmap</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="theme-toggle" data-theme-toggle aria-label="Switch to dark theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"/></svg>
+        </button>
+        <a class="btn btn-primary" href="../index.html">Back to home</a>
+        <button class="nav-toggle" data-nav-toggle aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile">
+    <a href="../index.html">Home</a>
+    <a href="../architecture.html">Architecture</a>
+    <a href="index.html">Docs</a>
+    <a href="../roadmap.html">Roadmap</a>
+    <div class="menu-foot">
+      <span>Theme</span>
+      <button class="theme-toggle" data-theme-toggle aria-label="Switch to dark theme">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <div class="docs-wrap">
+
+    <aside class="docs-side" aria-label="Documentation">
+      <div class="side-group">
+        <p class="side-heading">Getting started</p>
+        <a href="index.html">Overview</a>
+      </div>
+      <div class="side-group">
+        <p class="side-heading">Concepts</p>
+        <a href="concepts.html">How Mvua works</a>
+      </div>
+      <div class="side-group">
+        <p class="side-heading">Reference</p>
+        <a href="protocol.html">Protocol reference</a>
+      </div>
+      <div class="side-group">
+        <p class="side-heading">Help</p>
+        <a href="faq.html">FAQ</a>
+      </div>
+    </aside>
+
+    <main class="docs-main" id="main">
+      <div class="doc-body">
+        <h1>Frequently asked questions</h1>
+        <p class="lead">The questions people ask most, answered plainly. If something here is marked provisional, it is not yet final, and we say so.</p>
+
+        <h2>Is this real insurance?</h2>
+        <p>It is parametric risk transfer. The mechanism is the same as index based crop insurance sold in many markets, implemented on a blockchain. Whether a policy is legally insurance depends on where it is offered and who offers it; on the protocol level, Mvua is software that pays a defined amount when a defined index crosses a threshold. It is not a promise from a company, it is a rule the contract enforces.</p>
+
+        <h2>What is basis risk, and why should I care?</h2>
+        <p>Basis risk is the gap between the index and any single farm's real outcome. The index might say the season failed while your field did fine, or the reverse. It is the central trade off of parametric insurance: you give up the precision of an adjuster in exchange for a payout that arrives without assessment or dispute. Mvua reduces it with regional granularity, careful index design, and a severity curve that pays partial amounts rather than nothing until a cliff. It cannot eliminate it, and no parametric product can.</p>
+
+        <h2>What happens if the weather data is wrong?</h2>
+        <p>Several things work together. The median requires at least two independent publishers, so one bad source cannot move the number. A reading can be challenged by a guardian and excluded before it is trusted. Data older than the staleness bound is reported as stale, which blocks a trigger rather than firing one. And adding a publisher's key sits behind a timelock, so a compromised key has a cancellation window. None of this makes a wrong world record right, but it removes every single point of failure we can.</p>
+
+        <h2>Who decides when to pay?</h2>
+        <p>No one, in the sense of a person judging a claim. The trigger engine computes severity from the signed data and the fixed index definition. A guardian finalizes the trigger after the challenge window, but that step does not decide the amount, it only confirms the window has elapsed. The payout vault then pays exactly what the trigger engine reports. A human can delay a payout by challenging data, but cannot invent one or inflate it.</p>
+
+        <h2>Do farmers need XLM or a wallet to get paid?</h2>
+        <p>No. Payouts are pushed on the farming side as address claims that a Stellar Asset Contract transfer can settle without the recipient holding XLM, a trustline, or signing anything to receive. That choice exists because the people the protocol serves should not need to understand gas or wallet mechanics to receive money they are owed.</p>
+
+        <h2>What is still provisional?</h2>
+        <p>The premium curve, the publisher registry timelock, the staleness bound, the challenge window, the observation ring size, the batch cap, and the index thresholds. They are marked throughout the <a href="protocol.html">protocol reference</a>. They were chosen so the mechanism could be built and tested, and they will be calibrated from historical backtests before any real pool relies on them.</p>
+
+        <h2>What stage is the project at?</h2>
+        <p>The contract core is written, tested, and released as v0.2.0. A live testnet season is in progress, which is the first time the protocol runs against real weather data and real wall-clock time. Mainnet is deliberately far off: it sits behind an external audit and a full beta season operated like production. The <a href="../roadmap.html">roadmap</a> has the honest state of each phase.</p>
+
+        <h2>Is there a token?</h2>
+        <p>No. The protocol operates in USDC on Stellar and there is no protocol token. Capital providers earn from premiums and the loss waterfall, not from a speculative asset. Nothing here is an offer or a solicitation, and nothing here is financial advice.</p>
+
+        <h2>How can I follow or contribute?</h2>
+        <p>The repositories are public under the <a href="https://github.com/Mvua-Protocol" target="_blank" rel="noopener">Mvua-Protocol</a> organization, and the commit history is the most reliable status report the project can offer. Contributions follow the standard contribution guide in each repository, with trunk based development and required review.</p>
+
+        <div class="callout callout-note">
+          <span class="callout-title">Something not answered here?</span>
+          <p>Open an issue or a discussion on the relevant repository. Questions asked in public help everyone who reads the docs next.</p>
+        </div>
+
+        <nav class="doc-nav">
+          <a class="prev" href="protocol.html">
+            <span class="dir">Previous</span>
+            <span class="t">Protocol reference</span>
+          </a>
+          <a class="next" href="index.html">
+            <span class="dir">Docs home</span>
+            <span class="t">Overview</span>
+          </a>
+        </nav>
+      </div>
+    </main>
+
+  </div>
+
+  <script src="../assets/js/mvua.js"></script>
+</body>
+</html>
