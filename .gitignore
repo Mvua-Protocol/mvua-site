@@ -12,6 +12,14 @@ node_modules/
 .vercel/
 .netlify/
 
-# Build output (this site has no build step; kept for safety)
+# Next.js build output and cache
+.next/
+out/
+next-env.d.ts.timestamp
+*.tsbuildinfo
+
+# Caches and logs
 dist/
 .cache/
+*.log
+npm-debug.log*

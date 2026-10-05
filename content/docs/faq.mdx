@@ -1,0 +1,49 @@
+---
+title: FAQ
+description: Is this real insurance, what is basis risk, what happens if the data is wrong and what stage the project is at.
+section: Help
+sectionOrder: 3
+order: 1
+---
+
+The questions people ask most, answered plainly. If something here is marked provisional it is not yet final; we say so.
+
+## Is this real insurance?
+
+It is parametric risk transfer. The mechanism is the same as index based crop insurance sold in many markets, implemented on a blockchain. Whether a policy is legally insurance depends on where it is offered and who offers it; on the protocol level, Mvua is software that pays a defined amount when a defined index crosses a threshold. It is not a promise from a company, it is a rule the contract enforces.
+
+## What is basis risk and why should I care?
+
+Basis risk is the gap between the index and any single farm's real outcome. The index might say the season failed while your field did fine, or the reverse. It is the central trade off of parametric insurance: you give up the precision of an adjuster in exchange for a payout that arrives without assessment or dispute. Mvua reduces it with regional granularity, careful index design and a severity curve that pays partial amounts rather than nothing until a cliff. It cannot eliminate it; no parametric product can.
+
+## What happens if the weather data is wrong?
+
+Several things work together. The median requires at least two independent publishers, so one bad source cannot move the number. A reading can be challenged by a guardian and excluded before it is trusted. Data older than the staleness bound is reported as stale, which blocks a trigger rather than firing one. And adding a publisher's key sits behind a timelock, so a compromised key has a cancellation window. None of this makes a wrong world record right, but it removes every single point of failure we can.
+
+## Who decides when to pay?
+
+No one, in the sense of a person judging a claim. The trigger engine computes severity from the signed data and the fixed index definition. A guardian finalizes the trigger after the challenge window, but that step does not decide the amount, it only confirms the window has elapsed. The payout vault then pays exactly what the trigger engine reports. A human can delay a payout by challenging data, but cannot invent one or inflate it.
+
+## Do farmers need XLM or a wallet to get paid?
+
+No. Payouts are pushed on the farming side as address claims that a Stellar Asset Contract transfer can settle without the recipient holding XLM, a trustline, or signing anything to receive. That choice exists because the people the protocol serves should not need to understand gas or wallet mechanics to receive money they are owed.
+
+## What is still provisional?
+
+The premium curve, the publisher registry timelock, the staleness bound, the challenge window, the observation ring size, the batch cap and the index thresholds. They are marked throughout the [protocol reference](/docs/reference/protocol). They were chosen so the mechanism could be built and tested; they will be calibrated from historical backtests before any real pool relies on them.
+
+## What stage is the project at?
+
+The contract core is written, tested and released as v0.2.0. A live testnet season is in progress, which is the first time the protocol runs against real weather data and real wall-clock time. Mainnet is deliberately far off: it sits behind an external audit and a full beta season operated like production. The [roadmap](/roadmap) has the honest state of each phase.
+
+## Is there a token?
+
+No. The protocol operates in USDC on Stellar and there is no protocol token. Capital providers earn from premiums and the loss waterfall, not from a speculative asset. Nothing here is an offer or a solicitation; nothing here is financial advice.
+
+## How can I follow or contribute?
+
+The repositories are public under the Mvua-Protocol organization and the commit history is the most reliable status report the project can offer. Contributions follow the standard contribution guide in each repository, with trunk based development and required review.
+
+<Callout type="clay" title="Something not answered here?">
+Open an issue or a discussion on the relevant repository. Questions asked in public help everyone who reads the docs next.
+</Callout>

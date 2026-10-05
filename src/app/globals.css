@@ -1,0 +1,251 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   MVUA THEME TOKENS
+   Sand paper and navy ink in light mode; deep rain-night blue in dark.
+   The rain-blue gradient is the signature accent; terracotta (clay) is a
+   sparing second accent, dry earth against the rain.
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  color-scheme: light;
+
+  /* Surfaces: sand paper, warm and matte */
+  --color-bg-base: #F5EFE6;
+  --color-bg-elevated: #FBF7F0;
+  --color-bg-sunken: #EAE1D3;
+
+  /* Ink: navy */
+  --color-text-primary: #12324E;
+  --color-text-secondary: #4E6076;
+  --color-text-muted: #8A9AA6;
+
+  /* Brand */
+  --color-primary: #1E4D74;
+  --color-primary-hover: #0E4E7E;
+  --color-accent: #C96A43;
+
+  /* Rain blues (used directly by the gradient + mark) */
+  --rain-deep: #0E4E7E;
+  --rain-mid: #2E86C1;
+  --rain-light: #5AB0E4;
+
+  /* Signature gradients */
+  --grad-ink: linear-gradient(180deg, #0E4E7E 0%, #2E86C1 100%);
+  --grad-rain-h: linear-gradient(96deg, #0E4E7E 0%, #2E86C1 52%, #5AB0E4 100%);
+
+  /* Neumorphic shadows, light source at 135deg (top-left) */
+  --shadow-dark: #D8C9B4;
+  --shadow-light: #FFFDF9;
+
+  /* Semantic */
+  --color-success: #1F7A4D;
+  --color-warning: #B26A12;
+  --color-error: #B23A2E;
+  --color-border: #E0D5C5;
+
+  --color-callout-note-bg: rgba(46, 134, 193, 0.10);
+  --color-callout-warning-bg: rgba(178, 106, 18, 0.12);
+  --color-callout-clay-bg: rgba(201, 106, 67, 0.12);
+}
+
+.dark {
+  color-scheme: dark;
+
+  --color-bg-base: #0E2A42;
+  --color-bg-elevated: #14344F;
+  --color-bg-sunken: #0A2135;
+
+  --color-text-primary: #EAF2FA;
+  --color-text-secondary: #A9C0D4;
+  --color-text-muted: #6E8598;
+
+  --color-primary: #5AB0E4;
+  --color-primary-hover: #8FCBF0;
+  --color-accent: #E08A6A;
+
+  --rain-deep: #5AB0E4;
+  --rain-mid: #5AB0E4;
+  --rain-light: #8FCBF0;
+
+  --grad-ink: linear-gradient(180deg, #5AB0E4 0%, #8FCBF0 100%);
+  --grad-rain-h: linear-gradient(96deg, #1E6FA8 0%, #3E9CD6 52%, #5AB0E4 100%);
+
+  --shadow-dark: #071A2C;
+  --shadow-light: #17395A;
+
+  --color-success: #4FBF8B;
+  --color-warning: #E0A54F;
+  --color-error: #E0705F;
+  --color-border: #1E4566;
+
+  --color-callout-note-bg: rgba(90, 176, 228, 0.14);
+  --color-callout-warning-bg: rgba(224, 165, 79, 0.16);
+  --color-callout-clay-bg: rgba(224, 138, 106, 0.16);
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  /* Hide the page scrollbar while keeping scroll working (wheel, touch, keys). */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* legacy Edge/IE */
+}
+
+/* Hide the page scrollbar in Chromium, Safari and new Edge. */
+html::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+body {
+  background-color: var(--color-bg-base);
+  color: var(--color-text-primary);
+  font-family: var(--font-mulish), system-ui, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Ambient rain-blue corner glows behind everything. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 62% 52% at 5% 0%, rgba(46, 134, 193, 0.07) 0%, transparent 65%),
+    radial-gradient(ellipse 54% 62% at 97% 100%, rgba(14, 78, 126, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 48% at 97% 3%, rgba(90, 176, 228, 0.05) 0%, transparent 58%),
+    radial-gradient(ellipse 44% 40% at 3% 96%, rgba(201, 106, 67, 0.035) 0%, transparent 55%);
+}
+
+.dark body::before {
+  background:
+    radial-gradient(ellipse 60% 50% at 6% 0%, rgba(90, 176, 228, 0.14) 0%, transparent 62%),
+    radial-gradient(ellipse 52% 60% at 97% 100%, rgba(46, 134, 193, 0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 48% at 98% 3%, rgba(143, 203, 240, 0.08) 0%, transparent 58%),
+    radial-gradient(ellipse 44% 40% at 2% 97%, rgba(224, 138, 106, 0.06) 0%, transparent 55%);
+}
+
+/* Faint dot grid overlay. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(18, 50, 78, 0.05) 1px, transparent 1px);
+  background-size: 22px 22px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, black 0%, transparent 85%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, black 0%, transparent 85%);
+}
+
+.dark body::after {
+  background-image: radial-gradient(rgba(143, 203, 240, 0.06) 1px, transparent 1px);
+}
+
+::selection {
+  background: rgba(46, 134, 193, 0.22);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@layer utilities {
+  .grad-text {
+    background: var(--grad-ink, linear-gradient(180deg, #0E4E7E 0%, #2E86C1 100%));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-border) transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: var(--color-border);
+    border-radius: 3px;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-bold transition-[background-color,color,transform,box-shadow] duration-200 min-h-11;
+  }
+  .btn-primary {
+    @apply text-white shadow-neu-raised-sm;
+    background-image: var(--grad-rain-h, linear-gradient(96deg, #0E4E7E 0%, #2E86C1 52%, #5AB0E4 100%));
+  }
+  .btn-primary:hover {
+    transform: translateY(-1px);
+  }
+  .btn-secondary {
+    @apply border text-content-primary shadow-neu-raised-sm bg-bg-elevated;
+    border-color: var(--color-border);
+  }
+  .btn-secondary:hover {
+    color: var(--color-primary);
+    transform: translateY(-1px);
+  }
+
+  .card {
+    @apply rounded-3xl p-7 bg-bg-elevated shadow-neu-raised border border-transparent;
+  }
+
+  .kicker {
+    @apply font-display text-sm font-semibold tracking-wide text-theme-primary;
+  }
+
+  .callout {
+    @apply rounded-2xl px-5 py-4 my-6 border shadow-neu-sunken-sm;
+    border-color: var(--color-border);
+  }
+  .callout-note {
+    background: var(--color-callout-note-bg);
+  }
+  .callout-warn {
+    background: var(--color-callout-warning-bg);
+  }
+  .callout-clay {
+    background: var(--color-callout-clay-bg);
+  }
+  .callout-title {
+    @apply block font-display font-bold text-sm mb-1 text-content-primary;
+  }
+}

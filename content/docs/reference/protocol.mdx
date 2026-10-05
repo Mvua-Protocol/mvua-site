@@ -1,0 +1,103 @@
+---
+title: Protocol reference
+description: The five contracts, the index definitions, the severity curve, the trust model and the numbers that are still provisional.
+section: Reference
+sectionOrder: 2
+order: 1
+---
+
+The contracts, the index definitions, the severity curve, the trust model and the numbers that are still provisional. This is the detail behind the [how Mvua works](/docs/guide/how-mvua-works) page.
+
+<Callout type="warn" title="Read this first">
+Several values here are provisional. They were chosen so the mechanism could be built and tested; they will be calibrated from historical backtests before any real pool relies on them. Provisional values are marked as such throughout. Treat them as the shape of the design, not as final commitments.
+</Callout>
+
+## The five contracts
+
+### risk-pool
+
+Holds premiums and liquidity provider capital in USDC. Capital is split into a junior tranche, which takes first loss and earns more, plus a senior tranche, which is protected and earns less. A season moves through Open, Active, Closed and Settled. Premiums are collected against a capped protocol fee and settlement applies an asymmetric waterfall: surplus is credited to the junior tranche, while a loss is absorbed junior first, then senior. Solvency is an enforced invariant, checked on chain. The premium curve is a documented placeholder pending calibration (provisional).
+
+### policy
+
+Mints a non fungible certificate for each purchase, carrying the coverage amount, region, coverage window and severity curve. A policy moves Active to Triggered to Paid on a claim, Active to Expired after the window, or Active to Cancelled before it opens. The contract holds no value itself: premiums flow into the risk pool and refunds flow back out. Off chain metadata is kept as an opaque thirty two byte pointer, so no personally identifying information is stored on chain. A cooperative can mint a bounded batch in one atomic call, up to a provisional cap of twenty policies per call. Policy transfers exist but are off by default and can be enabled per pool by governance.
+
+### oracle-adapter
+
+The trust boundary for external weather data. Independent publishers submit signed observations and the adapter verifies each ed25519 signature directly, so a weather station needs no on chain account. It returns a median only when at least two distinct publishers are represented and the data is within the staleness bound; otherwise it reports the index as stale. Observations are written into a fixed ring per region and metric; guardians can challenge a stored observation to exclude it from the median.
+
+### trigger-engine
+
+Evaluates index definitions deterministically. Soroban has no floating point, so all maths is integer only; every division states its rounding direction. It reads the median series and an immutable index definition and produces a severity in basis points. A breach moves the window from Healthy to Triggered idempotently; a guardian finalizes it after a challenge window, writing an irreversible finalized state. The rule is fixed before the season, so the same inputs always produce the same outcome.
+
+### payout-vault
+
+Releases payouts as resumable batches. Soroban has no host function to mint a classic Stellar claimable balance, so a payout is recorded as a contract held claim against an address and pushed on claim, which is the faithful equivalent: a Stellar Asset Contract transfer to an address needs no XLM, no trustline and no signature from the recipient. Funds move only through a guarded pool release callable by the registered vault, which re-checks solvency before it moves anything. The vault makes no decisions: it pays exactly what the trigger engine reports.
+
+## Index definitions
+
+An index definition is fixed before the season and cannot be changed once policies reference it. Two definitions are implemented. Ratios are stored in basis points, where one hundred percent is ten thousand bps.
+
+### Rainfall shortfall
+
+Fires when cumulative rainfall over the window falls far enough below the historical baseline for that region and window. The realized ratio is the actual divided by the baseline, in bps, rounding toward zero. The trigger test is strict: falling exactly on the threshold does not fire.
+
+| Parameter | Meaning | Provisional value |
+| --- | --- | --- |
+| `baseline` | Historical seasonal rainfall for this region and window | fixed per region and window |
+| `trigger_ratio_bps` | Fires when actual is below this share of baseline | 7,500 (75 percent) |
+| `exhaustion_ratio_bps` | Full payout at or below this share of baseline | 4,000 (40 percent) |
+
+### Consecutive dry days
+
+Fires when the longest run of consecutive dry days within the window reaches a threshold. A day counts as dry when its median rainfall is at or below a small floor. Replay, out of order and overrun days are rejected as non deterministic input.
+
+| Parameter | Meaning | Provisional value |
+| --- | --- | --- |
+| `dry_floor` | Daily rainfall at or below which a day counts as dry, in tenths of a millimetre | 10 (1.0 mm) |
+| `trigger_days` | Run length that fires the index | 21 |
+| `exhaustion_days` | Run length at maximum payout | 35 |
+
+## The severity curve
+
+A trigger is not all or nothing. Once triggered, severity scales the payout linearly from zero at the trigger point to full at the exhaustion point, which reduces basis risk and cliff effects. The curve maps an index to a severity in basis points between zero and ten thousand; the per policy payout is the coverage multiplied by that fraction, rounding down to favor the pool. The curve is monotonic and clamped, so a worse index never yields a smaller payout and a payout can never exceed the coverage bought.
+
+<Callout type="note" title="Worked example, rainfall shortfall">
+Baseline 800 mm, actual 520 mm. The realized ratio is 520 divided by 800, which is 6,500 bps. That is below the 7,500 bps trigger, so the index fires. Severity is (7,500 minus 6,500) times 10,000 divided by (7,500 minus 4,000), which is 2,857 bps after rounding down. On a 100 USDC policy that is a payout of 28 USDC. At 320 mm the ratio is 4,000 bps, severity reaches full and the policy pays in full.
+</Callout>
+
+## Golden test vectors
+
+These fixed cases pin the maths. They are the source of truth for the trigger engine's tests, so the on chain behaviour can never drift from the specification without a failing test.
+
+| Case | Index | Inputs | Expected |
+| --- | --- | --- | --- |
+| G1 | Rainfall shortfall | baseline 800, actual 800 | ratio 10,000, not triggered |
+| G2 | Rainfall shortfall | baseline 800, actual 600 | ratio 7,500, not triggered (boundary) |
+| G3 | Rainfall shortfall | baseline 800, actual 520 | ratio 6,500, triggered, severity 2,857 bps |
+| G4 | Rainfall shortfall | baseline 800, actual 320 | ratio 4,000, triggered, severity 10,000 bps |
+| G5 | Consecutive dry days | longest run 20 | not triggered |
+| G6 | Consecutive dry days | longest run 21 | triggered, severity 0 bps (boundary) |
+| G7 | Consecutive dry days | longest run 28 | triggered, severity 5,000 bps |
+| G8 | Consecutive dry days | longest run 35 | triggered, severity 10,000 bps |
+
+## The trust model
+
+Every money decision is a function of public inputs. Where trust is still required, the design names it and bounds it.
+
+| Bound | Provisional value | What it protects against |
+| --- | --- | --- |
+| Publisher registry timelock | 7 days | A compromised key being added and used immediately; guardians get a cancellation window. |
+| Observation staleness bound | 48 hours | Acting on old data. A stale index blocks a trigger, it never fires one. |
+| Minimum distinct publishers | 2 | A single bad or dishonest publisher moving the median alone. |
+| Challenge window before finalization | 24 hours | A reading being trusted before guardians can object to it. |
+| Observation ring size per region and metric | 16 | Unbounded storage growth; older entries are overwritten. |
+| Batch cap per call | 20 | Transaction and instruction limits; larger groups are split across calls. |
+
+## What remains trusted
+
+Two things are trusted and named openly. First, the guardians, who can challenge readings, pause the vault and propose publishers. The design limits what they can do; it gives the community a cancellation window, but it does not pretend the role is empty. Second, the data sources themselves. Mvua reads rainfall from public feeds and from the publisher service; the median and the challenge window reduce reliance on any one source, but they cannot make a wrong world record right.
+
+## Where to read the code
+
+The contracts live in the public [`mvua-contract`](https://github.com/Mvua-Protocol/mvua-contract) repository, including the index specification and its golden vectors. The off chain publisher, which turns public rainfall archives into signed observations the oracle verifies, lives in [`mvua-publisher`](https://github.com/Mvua-Protocol/mvua-publisher).
