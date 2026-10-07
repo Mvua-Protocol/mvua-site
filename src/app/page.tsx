@@ -3,12 +3,15 @@ import Link from "next/link";
 import {
   ArrowRight,
   CloudRain,
+  Coins,
   Droplets,
   FileCheck2,
+  HandCoins,
   Layers,
   Radio,
   ShieldCheck,
   Waves,
+  Zap,
 } from "lucide-react";
 import { SiteShell } from "@/components/layout/SiteShell";
 import { Reveal } from "@/components/ui/Reveal";
@@ -82,6 +85,29 @@ const pillars = [
   {
     title: "Terms are fixed before the season",
     body: "The trigger and payout are written at purchase. Nobody can move the goalposts after the weather is known.",
+  },
+];
+
+const stellarReasons = [
+  {
+    icon: Zap,
+    title: "Fees a farmer can ignore",
+    body: "A premium can be a few dollars and a payout smaller still. Stellar settles in about five seconds for a tiny fraction of a cent, so the network cost never eats the cover.",
+  },
+  {
+    icon: Coins,
+    title: "Stablecoin, not speculation",
+    body: "The protocol works in USDC on Stellar. Premiums, reserves and payouts are denominated in a currency that does not swing, so a policy is worth what it says.",
+  },
+  {
+    icon: HandCoins,
+    title: "No wallet gymnastics to get paid",
+    body: "A Stellar Asset Contract transfer reaches a farmer without XLM, a trustline or a signature from them. The people the protocol serves should not have to learn gas to receive money they are owed.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Contracts you can check",
+    body: "Soroban runs the five contracts with integer only maths and deterministic execution, so the same inputs always produce the same payout. Nothing about the decision is hidden.",
   },
 ];
 
@@ -217,22 +243,22 @@ export default function HomePage() {
           another. Funds, policy terms, data intake, the index decision and payout are
           separate.
         </Reveal>
-        <div className="mt-12 space-y-3">
+        <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-6">
           {contracts.map((c, i) => (
             <Reveal
               key={c.name}
               delayMs={i * 60}
-              className="flex items-center gap-5 rounded-2xl bg-bg-elevated px-6 py-5 shadow-neu-raised"
+              className={`flex flex-col gap-3 rounded-2xl bg-bg-elevated p-6 shadow-neu-raised ${
+                i < 3 ? "lg:col-span-2" : "lg:col-span-3"
+              }`}
             >
               <span className="inline-flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-bg-sunken text-theme-primary shadow-neu-sunken-sm">
                 <c.icon size={20} aria-hidden="true" />
               </span>
-              <div className="flex flex-col sm:flex-row sm:items-baseline sm:gap-4">
-                <code className="font-mono text-sm font-semibold text-theme-accent">
-                  {c.name}
-                </code>
-                <span className="text-content-secondary">{c.role}</span>
-              </div>
+              <code className="font-mono text-sm font-semibold text-theme-accent">
+                {c.name}
+              </code>
+              <span className="text-sm leading-snug text-content-secondary">{c.role}</span>
             </Reveal>
           ))}
         </div>
@@ -330,9 +356,10 @@ export default function HomePage() {
               href={GITHUB_CONTRACT_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-5 inline-flex items-center gap-2 font-mono text-xs text-theme-primary hover:underline"
+              className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-theme-primary no-underline transition-colors hover:text-theme-accent"
             >
-              github.com/Mvua-Protocol/mvua-contract
+              Mvua Protocol
+              <ArrowRight size={14} aria-hidden="true" />
             </a>
           </Reveal>
           <Reveal delayMs={100} className="flex flex-col rounded-3xl bg-bg-elevated p-7 shadow-neu-raised">
@@ -350,9 +377,10 @@ export default function HomePage() {
               href={GITHUB_APP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-5 inline-flex items-center gap-2 font-mono text-xs text-theme-primary hover:underline"
+              className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-theme-primary no-underline transition-colors hover:text-theme-accent"
             >
-              github.com/Mvua-Protocol/mvua-app
+              Mvua App
+              <ArrowRight size={14} aria-hidden="true" />
             </a>
           </Reveal>
           <Reveal delayMs={200} className="flex flex-col rounded-3xl bg-bg-elevated p-7 shadow-neu-raised">
@@ -372,11 +400,46 @@ export default function HomePage() {
               href={GITHUB_PUBLISHER_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-5 inline-flex items-center gap-2 font-mono text-xs text-theme-primary hover:underline"
+              className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-theme-primary no-underline transition-colors hover:text-theme-accent"
             >
-              github.com/Mvua-Protocol/mvua-publisher
+              Mvua Publisher
+              <ArrowRight size={14} aria-hidden="true" />
             </a>
           </Reveal>
+        </div>
+      </section>
+
+      {/* Why Stellar */}
+      <section className="mx-auto max-w-[1400px] px-6 pb-24 lg:px-8">
+        <Reveal as="p" className="font-display text-xs font-bold uppercase tracking-widest text-theme-primary">
+          Why Stellar
+        </Reveal>
+        <Reveal as="h2" delayMs={80} className="mt-3 max-w-3xl font-display text-3xl font-extrabold tracking-tight text-content-primary sm:text-4xl">
+          Built on rails made for small money
+        </Reveal>
+        <Reveal as="p" delayMs={160} className="mt-6 max-w-3xl text-lg leading-relaxed text-content-secondary">
+          Mvua pays small amounts to people the traditional system priced out, so the
+          rails underneath have to be cheap, fast and reachable without a bank. Stellar
+          was built for exactly that.
+        </Reveal>
+        <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2">
+          {stellarReasons.map((r, i) => (
+            <Reveal
+              key={r.title}
+              delayMs={i * 80}
+              className="flex flex-col rounded-3xl bg-bg-elevated p-6 shadow-neu-raised"
+            >
+              <span className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-bg-sunken text-theme-primary shadow-neu-sunken-sm">
+                <r.icon size={22} aria-hidden="true" />
+              </span>
+              <h3 className="font-display text-lg font-bold text-content-primary">
+                {r.title}
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-content-secondary">
+                {r.body}
+              </p>
+            </Reveal>
+          ))}
         </div>
       </section>
     </SiteShell>
