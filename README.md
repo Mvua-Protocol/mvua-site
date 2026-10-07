@@ -17,46 +17,99 @@ product repositories:
 
 ## What is in here
 
-A static site. Plain HTML, one shared stylesheet, and a small amount of vanilla
-JavaScript for the theme toggle, the mobile menu, and docs navigation. There is
-no framework and no build step, so it opens straight from disk and deploys as
-pure static files.
+A Next.js 15 App Router application. The marketing pages are React server
+components; the documentation is authored in MDX and rendered through a
+catch-all route with a sidebar and a table of contents.
 
 Pages:
 
-- `index.html`: home. What Mvua is, the problem it solves, how parametric
-  insurance works, and the five contract architecture at a glance.
-- `architecture.html`: the five contracts, the purchase and payout flows, the
-  trust model, the oracle, and the index science with a worked example.
-- `roadmap.html`: where the project is and what comes next.
-- `docs/`: the full documentation, with its own sidebar.
+- `/`: home. What Mvua is, the problem it solves, how parametric insurance
+  works and the five contract architecture at a glance.
+- `/architecture`: the five contracts, the purchase and payout flows, the
+  trust model, the oracle and the index science with a worked example.
+- `/roadmap`: where the project is and what comes next.
+- `/docs`: the documentation hub.
+- `/docs/guide/how-mvua-works`: concepts, the lifecycle of a policy.
+- `/docs/reference/protocol`: the protocol reference.
+- `/docs/faq`: frequently asked questions.
 
 ## Run it locally
 
-Open `index.html` directly, or serve the folder:
+Requires Node.js 20 or newer.
 
 ```bash
-python3 -m http.server 8080
+npm install
+npm run dev
 ```
 
-Then visit `http://localhost:8080`.
+Then visit `http://localhost:3000`.
+
+To build and serve a production bundle:
+
+```bash
+npm run build
+npm start
+```
+
+## Project layout
+
+```
+mvua-site/
+  content/docs/            MDX documentation
+    guide/how-mvua-works.mdx
+    reference/protocol.mdx
+    faq.mdx
+  src/
+    app/                   App Router routes
+      page.tsx             home
+      architecture/page.tsx
+      roadmap/page.tsx
+      docs/
+        page.tsx           docs hub
+        [...slug]/page.tsx catch-all MDX route
+      layout.tsx           root layout, fonts, theme bootstrap
+      globals.css          design tokens and component classes
+    components/
+      layout/              Navbar, Footer, SiteShell
+      docs/                DocsLayoutShell, DocsSidebar, TableOfContents, mdx-components
+      providers/           ThemeProvider
+      ui/                  ThemeToggle, Reveal
+    constants/             site, nav, storage constants
+    lib/                   cn, mdx, slug helpers
+  public/                  brand assets
+```
+
+## Writing docs
+
+Add an `.mdx` file under `content/docs/`. Frontmatter drives the sidebar:
+
+```mdx
+---
+title: How Mvua works
+description: A short summary shown in the hub and the sidebar.
+section: Getting started
+sectionOrder: 1
+order: 1
+---
+
+Body content in Markdown. Custom components: `<Callout type="note|warn|clay" title="...">`.
+```
+
+Headings at the `##` and `###` levels are collected into the on-page table of
+contents automatically.
 
 ## Deploy
 
-Because the site is static, any static host works. Point the host at the
-repository root.
-
-- **Vercel**: import the repository. Framework preset: Other. Build command:
-  none. Output directory: `.`
-- **Netlify**: import the repository. Build command: none. Publish directory: `.`
-- **GitHub Pages**: in repository settings, set the source to the branch root.
+The app deploys as a standard Next.js project. On Vercel, import the repository
+and accept the detected defaults (framework: Next.js, build: `npm run build`).
 
 ## Design
 
-The site is built on a small token system in `assets/css/mvua.css`: sand paper,
-navy ink, and the rain blue drop gradient as the signature accent, with
-terracotta used sparingly. Light and dark themes are both first class. If you
-change a color or a typeface, change the token, not the page.
+The design system lives in `src/app/globals.css` as CSS variables and component
+classes: sand paper, navy ink and the rain blue drop gradient as the signature
+accent, with terracotta used sparingly. Tailwind reads these tokens through
+`tailwind.config.ts`. Light and dark themes are both first class. If you change
+a color or a typeface, change the token, not the page.
 
 ## Contributing
 

@@ -1,0 +1,66 @@
+---
+title: How Mvua works
+description: What parametric insurance is, why the data is the claim, the five contracts and the life of a policy from purchase to payout.
+section: Getting started
+sectionOrder: 1
+order: 1
+---
+
+The idea, the problem, the machine and the life of a policy. Read this to build a working mental model before the [protocol reference](/docs/reference/protocol) fills in the details.
+
+## What parametric insurance is
+
+Traditional insurance pays after someone assesses a loss. An adjuster visits, files paperwork and the claim is disputed and settled. For a smallholder with a two hectare plot, that process costs more than the premium is worth, so traditional insurers simply do not offer the product at all.
+
+Parametric insurance, also called index based insurance, removes the assessment. The contract pays when an objective, measurable index crosses an agreed threshold: cumulative rainfall below a fraction of its historical median, a run of consecutive dry days, a drop in satellite vegetation health. The data is the claim.
+
+The trade off is basis risk: the index can disagree with any single farm's actual outcome. Rain may fall on the next field and miss yours. Mvua's mitigation is regional granularity, careful index design and a severity curve rather than an all or nothing cliff, all documented openly. This is a real limitation of every parametric product, not a defect specific to Mvua.
+
+## The machine at a glance
+
+Mvua is five Soroban contracts on Stellar plus a thin web layer. Separating concerns means a defect in one contract cannot silently corrupt another.
+
+| Layer | Contract | Responsibility |
+| --- | --- | --- |
+| Capital | `risk-pool` | Holds premiums and liquidity provider capital in USDC across a junior and a senior tranche. Moves a season through Open, Active, Closed and Settled and applies a loss waterfall where the junior tranche absorbs first loss. |
+| Terms | `policy` | Mints a certificate per purchase with its region, coverage window and severity curve and moves it through a fixed lifecycle. Holds no value itself. |
+| Data | `oracle-adapter` | Verifies signed weather observations and returns a trusted median over fresh, unchallenged data from at least two independent publishers. |
+| Decision | `trigger-engine` | Evaluates an index definition deterministically with integer only maths and produces a severity in basis points. |
+| Settlement | `payout-vault` | Releases payouts as resumable batches into claimable balances, so a farmer never needs XLM to receive money. Makes no decisions of its own. |
+
+The [architecture page](/architecture) covers the flows, the trust model and the index science in full.
+
+## The two flows
+
+**Buying cover.**
+
+1. A buyer or a cooperative requests a quote for a region, a window and a coverage amount. The price comes from the pool's premium curve.
+2. The purchase collects the premium into the risk pool and mints an Active certificate.
+3. A cooperative can fund a bounded batch of policies in one atomic call, each owned by its own farmer.
+
+**Getting paid.**
+
+1. Through the season, independent publishers submit signed daily rainfall readings for the region.
+2. The adapter builds a trusted median, with a challenge window for guardians to exclude a bad reading.
+3. At window end the trigger engine computes a severity in basis points against the policy's index definition.
+4. If the index qualifies, the payout vault releases each payout into a claimable balance. No claim is filed and no adjuster is involved.
+
+## The life of a policy
+
+A policy moves through defined states, all verifiable on chain.
+
+| State | What it means |
+| --- | --- |
+| Active | The premium is paid and the certificate is minted with its region, window and severity curve. Publishers deliver observations and the trigger engine evaluates the index. |
+| Triggered | The index crossed its threshold and the trigger was finalized after the challenge window. |
+| Paid | The payout vault settled the payout into a claimable balance for the holder. |
+| Expired | The coverage window ended without a trigger. |
+| Cancelled | Cancelled before the coverage window opened, with a refund less a fee. |
+
+## What stays trusted
+
+Every money decision is a function of public inputs: the signed rainfall readings, the index definition and the policy terms. Two things are still trusted and the design names them rather than hiding them. Guardians hold the ability to challenge readings, pause and propose publishers, bounded by a timelock and a cancellation window. And the data sources themselves, which the median and the challenge window reduce reliance on but cannot make infallible.
+
+<Callout type="note" title="Read this next">
+The [protocol reference](/docs/reference/protocol) is the detail behind this page: the contracts, the index definitions, the severity curve and the trust model.
+</Callout>
