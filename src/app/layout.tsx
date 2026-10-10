@@ -60,6 +60,21 @@ export const metadata: Metadata = {
     url: SITE_URL_FALLBACK,
     siteName: SITE_NAME,
     type: "website",
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: `${SITE_NAME}: parametric climate insurance on Stellar`,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${SITE_NAME}: parametric climate insurance on Stellar`,
+    description:
+      "Farmers get paid automatically when on chain weather data says the season failed.",
+    images: ["/og.png"],
   },
 };
 
