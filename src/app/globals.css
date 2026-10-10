@@ -101,6 +101,17 @@ html::-webkit-scrollbar {
   display: none;
 }
 
+/* On laptops and larger, render the whole app a bit tighter so the wide layout
+   does not feel oversized at 100% browser zoom. Phones and small tablets are
+   left at full size. One knob: lower toward 0.7 for smaller, raise toward 1 for
+   larger. zoom scales type, spacing, icons and the container together, and (on
+   a non-root element) leaves the viewport media query breakpoints untouched. */
+@media (min-width: 1024px) {
+  #main-content {
+    zoom: 0.72;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
