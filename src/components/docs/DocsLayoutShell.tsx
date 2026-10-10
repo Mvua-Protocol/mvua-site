@@ -41,15 +41,15 @@ export function DocsLayoutShell({
           </aside>
 
           <main className="min-w-0">
+            <div className="mb-8 xl:hidden print:hidden">
+              <TableOfContents />
+            </div>
             <article
               id="doc-content"
               className="prose prose-slate max-w-prose dark:prose-invert prose-headings:font-display prose-headings:tracking-tight prose-a:font-semibold prose-a:text-theme-primary prose-code:font-mono prose-code:text-[0.85em] prose-code:text-theme-accent prose-code:before:content-none prose-code:after:content-none prose-pre:bg-bg-sunken prose-pre:shadow-neu-sunken-sm prose-table:text-sm prose-th:text-left prose-img:rounded-2xl"
             >
               {children}
             </article>
-            <div className="mt-16 xl:hidden print:hidden">
-              <TableOfContents />
-            </div>
           </main>
 
           <aside className="hidden xl:block print:hidden">
