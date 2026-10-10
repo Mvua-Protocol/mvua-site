@@ -3,6 +3,8 @@
 The public showcase and documentation site for [Mvua Protocol](https://github.com/Mvua-Protocol),
 parametric climate insurance on Stellar.
 
+Live at [mvua-site.vercel.app](https://mvua-site.vercel.app).
+
 Mvua ("rain" in Swahili) pays smallholder farmers automatically when on chain
 weather data shows the season failed. No claims adjusters, no paperwork: a
 failed season becomes a payout in minutes, not months.
