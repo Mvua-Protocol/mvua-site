@@ -347,7 +347,7 @@ export default function ArchitecturePage() {
           </h3>
           <p className="mt-3 text-sm leading-relaxed text-content-secondary">
             These fixed cases pin the maths. They are the source of truth for the trigger
-            engine's unit tests, so the on chain behaviour can never drift from the
+            engine&apos;s unit tests, so the on chain behaviour can never drift from the
             specification without a failing test.
           </p>
           <div className="mt-5 overflow-x-auto">
@@ -384,8 +384,8 @@ export default function ArchitecturePage() {
             Basis risk, stated honestly
           </h3>
           <p className="mt-3 text-sm leading-relaxed text-content-secondary">
-            An index can disagree with any single farm's real outcome. Rain may fall on a
-            neighbouring field and miss yours. Mvua's mitigation is regional granularity,
+            An index can disagree with any single farm&apos;s real outcome. Rain may fall on a
+            neighbouring field and miss yours. Mvua&apos;s mitigation is regional granularity,
             index design that is documented openly and a severity curve rather than a
             cliff. This is a real limitation of parametric insurance, not a defect specific
             to Mvua; it is the main reason the index parameters are backtested before

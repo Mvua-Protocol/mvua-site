@@ -10,8 +10,9 @@ export function generateStaticParams() {
   return getAllDocSlugs().map((slug) => ({ slug: slug.split("/") }));
 }
 
-export function generateMetadata({ params }: { params: { slug: string[] } }): Metadata {
-  const doc = getDocBySlug(params.slug.join("/"));
+export async function generateMetadata({ params }: { params: Promise<{ slug: string[] }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const doc = getDocBySlug(slug.join("/"));
   if (!doc) return { title: "Not found" };
   return {
     title: doc.title,
@@ -20,8 +21,9 @@ export function generateMetadata({ params }: { params: { slug: string[] } }): Me
   };
 }
 
-export default function DocPage({ params }: { params: { slug: string[] } }) {
-  const slug = params.slug.join("/");
+export default async function DocPage({ params }: { params: Promise<{ slug: string[] }> }) {
+  const { slug: segments } = await params;
+  const slug = segments.join("/");
   const doc = getDocBySlug(slug);
   if (!doc) notFound();
 
