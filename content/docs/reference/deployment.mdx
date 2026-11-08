@@ -1,0 +1,38 @@
+---
+title: Testnet deployment
+description: The live Stellar testnet contract addresses and the first settled season, with block explorer links.
+section: Reference
+sectionOrder: 2
+order: 2
+---
+
+Mvua runs on Stellar testnet today. These are the deployed contract addresses and a link to the first full season that settled on chain. This is pre alpha: the addresses are provisional, they can change on a redeploy and nothing here holds real funds.
+
+## Network
+
+Stellar testnet. Settlement is in a test USDC style token (a Stellar Asset Contract), not mainnet USDC.
+
+## Contracts
+
+Each contract has one job (see the [protocol reference](/docs/reference/protocol)). Open any address on the explorer to read its live state.
+
+| Contract | Role | Address on Stellar Expert |
+| --- | --- | --- |
+| `risk-pool` | Holds the capital | [CBCM4INQ...N6KBB](https://stellar.expert/explorer/testnet/contract/CBCM4INQE7EP22NCQNE3CAGYG2OHB52OEBRPPGA7CPOST7XPON3N6KBB) |
+| `policy` | Records the terms | [CBVAHVPC...JVFM](https://stellar.expert/explorer/testnet/contract/CBVAHVPCKRD7VT7IXNGVDZMFJ5IIXPDD2PZBXOB33FOXPIK632JLJVFM) |
+| `oracle-adapter` | Brings in the weather | [CD4XMGP7...2PLWI](https://stellar.expert/explorer/testnet/contract/CD4XMGP7ZSJW7X4HDSTVJAVV4ZXYWVXFSIMM24FUTIT6L3AK2IN2PLWI) |
+| `trigger-engine` | Decides the season | [CBILV7F6...AZRR](https://stellar.expert/explorer/testnet/contract/CBILV7F6PKECVKSYR23RU5VWYGRWKDTFF6EUY53RM6DF6SNYF2MGAZRR) |
+| `payout-vault` | Releases the money | [CAVTQ46Q...VK5A](https://stellar.expert/explorer/testnet/contract/CAVTQ46QSIBFOYDAHBTS44ZUUKEMLGXQKETHQVKICY4EEGIPCAYEVK5A) |
+| settlement token | The USDC style asset | [CAOXWNHS...MGBL](https://stellar.expert/explorer/testnet/contract/CAOXWNHSM7RCF6Z7OQXVOOPE2BBJMCLKZNKRDY23KU6THZLCR7LKMGBL) |
+
+## The first settled season
+
+A full season ran end to end against real wall-clock time: a farmer bought cover, independent publishers submitted signed rainfall, the index triggered on a drought, the trigger finalized after the 24 hour challenge window and the payout was released and claimed. The numbers matched the golden test vector exactly, a severity of 2857 basis points, paid as 2857000 stroops on the policy.
+
+- [Finalize transaction](https://stellar.expert/explorer/testnet/tx/81d77cc957f6b54741b9a713bb4e3f232edb5ccb2da7bfba3d824b60b9678d1c): locks the severity at 2857 bps after the challenge window.
+- [Payout transaction](https://stellar.expert/explorer/testnet/tx/f3dc31b40ecea54034489099959d59a6b859d158f1f2c081a3cf2a5da18bd087): the vault records the 2857000 payout.
+- [Claim transaction](https://stellar.expert/explorer/testnet/tx/54dbde6b4f543cb3db7b0d1544b9ee09f857d3d27fa6223fa4f4ea4fbef44e3e): the farmer receives the payout.
+
+<Callout type="warn" title="Testnet only">
+These contracts are on Stellar testnet for validation. They are not audited, hold no real value and the addresses may change as the protocol iterates. Mainnet is gated behind an external audit and a full beta season.
+</Callout>

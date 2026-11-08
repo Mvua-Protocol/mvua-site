@@ -318,16 +318,21 @@ export default function HomePage() {
             Pre alpha, live on Stellar testnet
           </span>
           <h2 className="mt-6 max-w-2xl font-display text-3xl font-extrabold tracking-tight text-content-primary sm:text-4xl">
-            The on chain core is under active development and running a first testnet
-            season.
+            The on chain core has settled its first full season on Stellar testnet.
           </h2>
           <p className="mt-5 max-w-2xl text-lg leading-relaxed text-content-secondary">
-            Mainnet is gated behind an external audit and a full beta season operated
-            like production.
+            A farmer bought cover, the drought index triggered and the payout was released
+            and claimed on chain, matching the golden vector. Mainnet is gated behind an
+            external audit and a full beta season operated like production.
           </p>
-          <Link href="/roadmap" className="btn btn-primary mt-8">
-            See the roadmap <ArrowRight size={18} aria-hidden="true" />
-          </Link>
+          <div className="mt-8 flex flex-wrap gap-4">
+            <Link href="/docs/reference/deployment" className="btn btn-primary">
+              See the live deployment <ArrowRight size={18} aria-hidden="true" />
+            </Link>
+            <Link href="/roadmap" className="btn btn-secondary">
+              See the roadmap
+            </Link>
+          </div>
         </Reveal>
       </section>
 

@@ -31,6 +31,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Shared layout components: navbar, theme toggle and the signature footer with
   the neumorphic card and the giant masked wordmark.
 - Site constants for branding, navigation and repository links.
+- Testnet deployment reference page (`/docs/reference/deployment`): the live
+  Stellar testnet contract addresses and the finalize, payout and claim
+  transactions of the first settled season, linked to Stellar Expert. The home
+  page status strip and the roadmap milestone now report the settled season and
+  link to it.
 
 ### Removed
 
