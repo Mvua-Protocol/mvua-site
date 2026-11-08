@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { SiteShell } from "@/components/layout/SiteShell";
 import { Reveal } from "@/components/ui/Reveal";
@@ -95,17 +96,22 @@ export default function RoadmapPage() {
         <Reveal delayMs={220} className="mt-10 rounded-3xl bg-bg-elevated p-8 shadow-neu-raised">
           <span className="inline-flex items-center gap-2 rounded-full bg-bg-sunken px-4 py-1.5 text-sm font-semibold text-theme-accent shadow-neu-sunken-sm">
             <span className="h-2 w-2 rounded-full bg-theme-accent" aria-hidden="true" />
-            In progress
+            Milestone
           </span>
           <h2 className="mt-5 font-display text-2xl font-extrabold tracking-tight text-content-primary">
-            Testnet season in flight
+            First testnet season settled end to end
           </h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-content-secondary">
-            The five contracts are deployed to Stellar testnet and a real season is
-            running against wall-clock time, which is the only way to exercise the
-            publisher timelock and the challenge window honestly. Findings from this run
-            feed the next release.
+            The five contracts ran a full season on Stellar testnet against real wall-clock
+            time: a farmer bought cover, signed rainfall triggered the drought index, the
+            trigger finalized after the 24 hour challenge window and the payout was released
+            and claimed. The result matched the golden vector exactly, severity 2857 bps and
+            a 2857000 payout, which is the proof the timelocks and the money path hold
+            against reality.
           </p>
+          <Link href="/docs/reference/deployment" className="btn btn-secondary mt-6">
+            See the addresses and the on chain proof <ArrowRight size={18} aria-hidden="true" />
+          </Link>
         </Reveal>
       </section>
 
