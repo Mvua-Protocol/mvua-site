@@ -36,6 +36,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   transactions of the first settled season, linked to Stellar Expert. The home
   page status strip and the roadmap milestone now report the settled season and
   link to it.
+- The deployment page lists the redeployed `oracle-adapter` (2026-11-09, the
+  replay fix) and notes that the first season ran on the previous oracle.
 
 ### Removed
 
