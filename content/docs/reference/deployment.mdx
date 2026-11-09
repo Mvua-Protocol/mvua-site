@@ -20,10 +20,12 @@ Each contract has one job (see the [protocol reference](/docs/reference/protocol
 | --- | --- | --- |
 | `risk-pool` | Holds the capital | [CBCM4INQ...N6KBB](https://stellar.expert/explorer/testnet/contract/CBCM4INQE7EP22NCQNE3CAGYG2OHB52OEBRPPGA7CPOST7XPON3N6KBB) |
 | `policy` | Records the terms | [CBVAHVPC...JVFM](https://stellar.expert/explorer/testnet/contract/CBVAHVPCKRD7VT7IXNGVDZMFJ5IIXPDD2PZBXOB33FOXPIK632JLJVFM) |
-| `oracle-adapter` | Brings in the weather | [CD4XMGP7...2PLWI](https://stellar.expert/explorer/testnet/contract/CD4XMGP7ZSJW7X4HDSTVJAVV4ZXYWVXFSIMM24FUTIT6L3AK2IN2PLWI) |
+| `oracle-adapter` | Brings in the weather | [CCB4A2D3...TWSWF](https://stellar.expert/explorer/testnet/contract/CCB4A2D3HYHRRL5XWEPRQPVPC4FD2GAU63WLQOXCW6AFLPNA64ETWSWF) |
 | `trigger-engine` | Decides the season | [CBILV7F6...AZRR](https://stellar.expert/explorer/testnet/contract/CBILV7F6PKECVKSYR23RU5VWYGRWKDTFF6EUY53RM6DF6SNYF2MGAZRR) |
 | `payout-vault` | Releases the money | [CAVTQ46Q...VK5A](https://stellar.expert/explorer/testnet/contract/CAVTQ46QSIBFOYDAHBTS44ZUUKEMLGXQKETHQVKICY4EEGIPCAYEVK5A) |
 | settlement token | The USDC style asset | [CAOXWNHS...MGBL](https://stellar.expert/explorer/testnet/contract/CAOXWNHSM7RCF6Z7OQXVOOPE2BBJMCLKZNKRDY23KU6THZLCR7LKMGBL) |
+
+The `oracle-adapter` was redeployed on 2026-11-09 with a fix that accepts each signed reading only once and counts one value per publisher. The first season below ran on the previous oracle ([CD4XMGP7...2PLWI](https://stellar.expert/explorer/testnet/contract/CD4XMGP7ZSJW7X4HDSTVJAVV4ZXYWVXFSIMM24FUTIT6L3AK2IN2PLWI)), and its transactions remain valid.
 
 ## The first settled season
 
