@@ -9,7 +9,7 @@ order: 1
 The contracts, the index definitions, the severity curve, the trust model and the numbers that are still provisional. This is the detail behind the [how Mvua works](/docs/guide/how-mvua-works) page.
 
 <Callout type="warn" title="Read this first">
-Several values here are provisional. They were chosen so the mechanism could be built and tested; they will be calibrated from historical backtests before any real pool relies on them. Provisional values are marked as such throughout. Treat them as the shape of the design, not as final commitments.
+Several values here are provisional. They were chosen so the mechanism could be built and tested. A first calibration has since been run: 34 years of daily rainfall for four candidate regions in Kenya, Nigeria and Tanzania, replayed through the real contracts. It is a proposal until a pool adopts it, so the values below stay provisional and are marked as such throughout. Treat them as the shape of the design, not as final commitments.
 </Callout>
 
 ## The five contracts
@@ -24,7 +24,7 @@ Mints a non fungible certificate for each purchase, carrying the coverage amount
 
 ### oracle-adapter
 
-The trust boundary for external weather data. Independent publishers submit signed observations and the adapter verifies each ed25519 signature directly, so a weather station needs no on chain account. It returns a median only when at least two distinct publishers are represented and the data is within the staleness bound; otherwise it reports the index as stale. Observations are written into a fixed ring per region and metric; guardians can challenge a stored observation to exclude it from the median.
+The trust boundary for external weather data. Independent publishers submit signed observations and the adapter verifies each ed25519 signature directly, so a weather station needs no on chain account. It returns a median only when at least two distinct publishers are represented and the data is within the staleness bound; otherwise it reports the index as stale. The adapter keeps each publisher's latest observation for a region and metric, and every new one must carry a later timestamp, so a signed reading is accepted only once and cannot be replayed. The median takes one value per active publisher, so submitting more often buys a publisher no extra weight. Guardians can challenge a publisher's latest observation to exclude it from the median.
 
 ### trigger-engine
 
@@ -91,7 +91,7 @@ Every money decision is a function of public inputs. Where trust is still requir
 | Observation staleness bound | 48 hours | Acting on old data. A stale index blocks a trigger, it never fires one. |
 | Minimum distinct publishers | 2 | A single bad or dishonest publisher moving the median alone. |
 | Challenge window before finalization | 24 hours | A reading being trusted before guardians can object to it. |
-| Observation ring size per region and metric | 16 | Unbounded storage growth; older entries are overwritten. |
+| Publishers per region and metric | 16 | Unbounded work in the median; a removed publisher frees its place. |
 | Batch cap per call | 20 | Transaction and instruction limits; larger groups are split across calls. |
 
 ## What remains trusted

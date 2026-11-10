@@ -30,11 +30,11 @@ No. Payouts are pushed on the farming side as address claims that a Stellar Asse
 
 ## What is still provisional?
 
-The premium curve, the publisher registry timelock, the staleness bound, the challenge window, the observation ring size, the batch cap and the index thresholds. They are marked throughout the [protocol reference](/docs/reference/protocol). They were chosen so the mechanism could be built and tested; they will be calibrated from historical backtests before any real pool relies on them.
+The premium curve, the publisher registry timelock, the staleness bound, the challenge window, the number of publishers per region, the batch cap and the index thresholds. They are marked throughout the [protocol reference](/docs/reference/protocol). They were chosen so the mechanism could be built and tested. A first calibration from 34 years of rainfall history for four candidate regions has been run through the real contracts, but nothing is final until a pool adopts it.
 
 ## What stage is the project at?
 
-The contract core is written, tested and released as v0.2.0. A live testnet season is in progress, which is the first time the protocol runs against real weather data and real wall-clock time. Mainnet is deliberately far off: it sits behind an external audit and a full beta season operated like production. The [roadmap](/roadmap) has the honest state of each phase.
+The contract core is written, tested and released as v0.2.0. A full season has already settled end to end on testnet against real wall-clock time, from a farmer buying cover to the payout being claimed (see the [testnet deployment](/docs/reference/deployment)). The publisher service is released with retries and replay, and the index has been backtested over 34 years in four candidate regions. Next is a 30 day continuous publisher run on testnet. Mainnet is deliberately far off: it sits behind an external audit and a full beta season operated like production. The [roadmap](/roadmap) has the honest state of each phase.
 
 ## Is there a token?
 
