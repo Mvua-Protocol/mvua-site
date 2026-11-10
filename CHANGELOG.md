@@ -39,6 +39,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The deployment page lists the redeployed `oracle-adapter` (2026-11-09, the
   replay fix) and notes that the first season ran on the previous oracle.
 
+### Changed
+
+- Site brought up to date with Phase 2. The protocol reference describes the
+  oracle as it now works (each publisher's latest reading, accepted once, one
+  value per publisher in the median) instead of the replaced observation ring,
+  and its parameters table lists the publisher limit per region in place of
+  the ring size. The protocol reference, the architecture page and the FAQ say
+  that a first calibration from 34 years of rainfall in four candidate regions
+  has been run. The FAQ reports the settled testnet season, and the roadmap's
+  Phase 2 card lists what is done and what comes next.
+
 ### Removed
 
 - The previous static HTML pages and asset bundle (`index.html`,

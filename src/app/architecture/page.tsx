@@ -298,9 +298,11 @@ export default function ArchitecturePage() {
           <div className="callout callout-warn mt-5">
             <span className="callout-title">Provisional values</span>
             <div className="text-sm leading-relaxed text-content-secondary">
-              Every value marked provisional is a placeholder. The parameters are set
-              from historical backtests before any real pool uses them. They are shown
-              here so the mechanism is readable, not so they can be relied on as final.
+              Every value marked provisional is a placeholder. A first calibration
+              from 34 years of rainfall history in four candidate regions has been run
+              through the real contracts, and it stays a proposal until a pool adopts
+              it. The values are shown here so the mechanism is readable, not so they
+              can be relied on as final.
             </div>
           </div>
         </Reveal>
