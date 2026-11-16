@@ -1,0 +1,146 @@
+---
+title: Index methodology
+description: How Mvua chooses, calibrates, validates and prices a region's rainfall index, with every number reproducible from public data and code.
+section: Methodology
+sectionOrder: 3
+order: 1
+---
+
+How Mvua chooses the index for a region, sets its thresholds, checks it against history, and prices it. Every number on this page can be reproduced from public data and code, so the choices can be reviewed and challenged.
+
+<Callout type="warn" title="Testnet only">
+This calibration is the first pass, computed from 34 years of history. Two regions, Nakuru and Dodoma, have their index definitions frozen on Stellar testnet. No pool holding real money uses them, and nothing here is final until a pilot adopts it.
+</Callout>
+
+## What an index has to do
+
+A parametric policy pays from an index instead of a loss assessment, so the index is the whole product. A good index:
+
+1. **Pays in the seasons that hurt farmers**, and only those. Every season the index gets wrong, paying a farm that was fine or missing one that failed, is basis risk.
+2. **Pays often enough to be worth buying**, but rarely enough to be insurance rather than a subsidy.
+3. **Can be priced so the pool stays solvent**, at a premium farmers can afford.
+4. **Uses data that independent publishers can fetch, verify and sign every day.**
+
+## Data
+
+| Region | Place | Season (rain window) | Days |
+| --- | --- | --- | --- |
+| `KE_NAK` | Nakuru, Kenya (Rift Valley maize) | 1 March to 31 May, the long rains | 92 |
+| `NG_KAN` | Kano, Nigeria (savanna grains) | 1 June to 30 September | 122 |
+| `TZ_DOD` | Dodoma, Tanzania (central plateau) | 1 December to 30 April | 151 |
+| `TZ_MBE` | Mbeya, Tanzania (southern highlands) | 1 November to 30 April | 181 |
+
+- **Series:** daily precipitation from the ERA5 reanalysis, through the Open-Meteo historical archive, 1991 to 2024. That gives 34 seasons per region, or 33 where the season crosses New Year. The files and the script that regenerates them are in [`mvua-contract/data/history`](https://github.com/Mvua-Protocol/mvua-contract/tree/main/data/history).
+- **Why not weather stations:** the long running NOAA station records in these regions are too sparse. The Kano station reports rain on 0.8% of days from 1991 to 2024, Nakuru has no daily station file at all, and most stations in Kenya, Nigeria and Tanzania stopped reporting daily in 2025.
+- **Units:** millimetres are scaled by 100 to integers, exactly as the publishers do before signing, so the backtest sees the same numbers the contract would.
+
+## The index
+
+All four regions use the **rainfall shortfall** index from the [protocol reference](/docs/reference/protocol). The season's rainfall total is divided by a baseline to give a ratio in basis points. Below the **trigger** ratio the policy pays. Severity then ramps linearly to a full payout at the **exhaustion** ratio:
+
+```
+ratio     = season total * 10000 / baseline
+severity  = 0                                         if ratio >= trigger
+          = 10000                                     if ratio <= exhaustion
+          = (trigger - ratio) * 10000 / (trigger - exhaustion)   otherwise
+payout    = coverage * severity / 10000               (rounded down)
+```
+
+The **baseline** is the region's mean season total over the 34 years.
+
+## Calibration rule
+
+One fixed rule, applied the same way to every region, so nobody tunes a region to a desired answer:
+
+1. **Trigger:** set so the index pays in about **1 season in 6**. With 34 seasons, that means the 6 driest. The trigger sits between the 6th and 7th driest season, rounded down to 50 basis points.
+2. **Trigger cap:** never above **80% of the baseline**. A season with more than 80% of its normal rain is unlikely to cause crop loss, so paying for it would be basis risk by design.
+3. **Exhaustion:** set so only the **single driest season on record** pays in full: halfway between the driest and second driest season, rounded down to 50 basis points.
+
+The default index used before calibration (trigger 75%, exhaustion 40%, for every region) is kept as a comparison.
+
+## Results
+
+Every figure below comes from replaying the seasons through the real `trigger-engine` contract with the `backtest` tool, not from a reimplementation of the formula.
+
+| Region | Trigger | Exhaustion | Seasons that pay | Trigger years | Burning cost | Default index burning cost |
+| --- | --- | --- | --- | --- | --- | --- |
+| Nakuru | 59% | 18% | 6 of 34 (17.6%) | 1993, 1996, 2000, 2008, 2009, 2017 | **10.4%** | 21.1% |
+| Kano | 80% (cap) | 67% | 4 of 34 (11.8%) | 1996, 2002, 2017, 2021 | **3.7%** | 1.6% |
+| Dodoma | 69% | 51.5% | 6 of 33 (18.2%) | 1996, 1998, 1999, 2005, 2008, 2016 | **10.9%** | 9.3% |
+| Mbeya | 80% (cap) | 57.5% | 5 of 33 (15.2%) | 2016, 2017, 2018, 2021, 2022 | **7.3%** | 3.3% |
+
+The **burning cost** is the average payout per season as a share of coverage: what the policy would have cost to provide over the 34 years, before any loading.
+
+What the calibration changed:
+
+- **Nakuru:** the default index paid in 12 of 34 seasons and cost 21% a year, far too much. The calibrated index pays only in the deep shortfalls, and halves the cost.
+- **Kano:** its rains are steady, so the default index almost never paid (1 season in 34). The calibrated index pays in 4 seasons, at a modest cost.
+- **Dodoma and Mbeya:** both move toward about 1 season in 6, with costs between Kano and Nakuru.
+
+## Validation
+
+**Known droughts.** The trigger years should match droughts on record from other sources. Nakuru pays in 2000, 2009 and 2017, all major Kenyan drought years, with 2000 as the full payout. Dodoma pays in 2005 and 2016, the seasons of Tanzania's 2005/06 and 2016/17 droughts, with 2005 as the full payout.
+
+**A second rainfall dataset.** A calibration resting on one dataset can be fooled by that dataset's errors, so each region was checked against CHIRPS, a satellite and rain gauge blend, over the same seasons. Only regions where the two agree are trusted. Nakuru and Dodoma pass; Kano does not. The full comparison, including six more Nigerian sites, none of which pass, is on [Choosing pilot regions](/docs/methodology/pilot-regions).
+
+**Satellite greenness (basis risk).** For each season, the growing season NDVI (a satellite measure of how green the vegetation is, MODIS at 250 m) was compared with the season's rainfall:
+
+| Region | Correlation of NDVI with season rain |
+| --- | --- |
+| Nakuru | 0.65 |
+| Mbeya | 0.49 |
+| Dodoma (20 km area) | 0.44 |
+| Kano (20 km area) | 0.10 |
+
+Seasons where rainfall says drought but greenness does not are where a rainfall index is most likely to pay a farm that was fine, for example Nakuru 2007 and 2011, and Dodoma 2008 and 2009. Reporting these seasons per region is part of the methodology. NDVI is not used as a trigger: it arrives about 9 days after each 16 day period and is very sensitive to where it is sampled.
+
+## Frozen on testnet
+
+The two regions confirmed by the second dataset have their definitions created on the testnet `trigger-engine`. A definition can never be changed after it is created, which is what freezes it. Each one records the SHA-256 of the exact data file it was calibrated from.
+
+| Index | Region | Season | Baseline (scaled) | Trigger | Exhaustion |
+| --- | --- | --- | --- | --- | --- |
+| 1 | Nakuru `KE_NAK` | 92 days from 1 March | 22814 (228.14 mm) | 59% | 18% |
+| 2 | Dodoma `TZ_DOD` | 151 days from 1 December | 40775 (407.75 mm) | 69% | 51.5% |
+
+See the [testnet deployment](/docs/reference/deployment) for the contract addresses.
+
+## Pricing and solvency
+
+Two different numbers matter:
+
+- **The premium** has to cover the burning cost plus a loading (for expenses, the cost of capital and uncertainty). This page uses **1.5 times the burning cost** to illustrate.
+- **The capital** has to carry the pool through bad streaks. Drought hits every farmer in a region in the same season, so a one region pool must survive several bad seasons in a row.
+
+The `backtest` tool runs each region's real 34 season sequence and thousands of synthetic 10 season futures, resampled from history. It reports the chance the pool runs out of money (ruin) for a given premium and capital. At a premium of 1.5 times the burning cost, the chance of ruin within 10 seasons is:
+
+| Region | Premium (share of coverage) | Capital 1x coverage | 2x | 3x | 4x |
+| --- | --- | --- | --- | --- | --- |
+| Nakuru | 15.6% | 10.3% | 1.3% | 0.1% | 0.0% |
+| Kano | 5.6% | 3.7% | 0.4% | 0.0% | 0.0% |
+| Dodoma | 16.3% | 10.8% | 1.1% | 0.1% | 0.0% |
+| Mbeya | 10.9% | 8.7% | 0.8% | 0.0% | 0.0% |
+
+**Recommendation:** price each region at about 1.5 times its burning cost, and hold capital of **at least 3 times the coverage written**. That keeps the 10 season ruin probability around 0.1% or below in every region. Pricing alone cannot make a thinly capitalised pool safe: at 1x capital the premium would have to reach 20 to 35% of coverage to hold ruin at 1%.
+
+**Affordability.** A premium of 5.6% (Kano) to 16.3% (Dodoma) of coverage is a lot for a smallholder. This is the real cost of drought risk in these places, not a design flaw. Ways to lower what farmers pay, such as cooperative purchase, smaller cover per farmer or donor capital in the senior tranche, are policy choices for later.
+
+## Limits
+
+- **Reanalysis, not rain gauges.** ERA5 is a model at about 25 km. It reads about 30% below CHIRPS in every region checked, and Mbeya's series looks suspect: a high mean, and every shortfall after 2015.
+- **Short history for rare events.** 34 seasons hold only one or two severe droughts per region. Resampling can only repeat droughts that happened, so tail risk is likely understated.
+- **The baseline is fixed.** A changing climate can shift what "normal" means. The baseline should be reviewed on a schedule, and every change recorded as a decision.
+- **No farm level data.** Validation uses known drought years, a second dataset and satellite greenness, not farmers' actual losses.
+
+## Reproduce
+
+From a checkout of [`mvua-contract`](https://github.com/Mvua-Protocol/mvua-contract):
+
+```bash
+cargo build --release -p backtest
+# Nakuru, calibrated index, priced at 1.5x burning cost, capital 3x coverage
+target/release/backtest --data data/history/KE_NAK.csv --start 03-01 --days 92 \
+  --trigger-bps 5900 --exhaustion-bps 1800 --premium-bps 1556 --capital-pct 300
+```
+
+The other regions use `NG_KAN` (`--start 06-01 --days 122 --trigger-bps 8000 --exhaustion-bps 6700 --premium-bps 556`), `TZ_DOD` (`--start 12-01 --days 151 --trigger-bps 6900 --exhaustion-bps 5150 --premium-bps 1634`) and `TZ_MBE` (`--start 11-01 --days 181 --trigger-bps 8000 --exhaustion-bps 5750 --premium-bps 1092`).

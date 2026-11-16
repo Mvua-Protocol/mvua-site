@@ -38,6 +38,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   link to it.
 - The deployment page lists the redeployed `oracle-adapter` (2026-11-09, the
   replay fix) and notes that the first season ran on the previous oracle.
+- Methodology section in the docs (`/docs/methodology/...`): the index
+  methodology (data, calibration rule, results for all four regions, validation,
+  the indices frozen on testnet, pricing and solvency), choosing pilot regions
+  (the second dataset checks against CHIRPS) and fees (publisher costs, earnings
+  and the proposed rates). The FAQ moves to the end of the sidebar, and the
+  protocol reference and the FAQ link to the methodology.
 - Press folder: the article "Insurance That Pays When the Rain Doesn't" and its
   cover (`press/`, outside the build), with the cover image also served at
   `/press/mvua-protocol-cover.png`.
