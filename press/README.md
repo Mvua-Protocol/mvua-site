@@ -2,6 +2,8 @@
 
 Ready to publish material about Mvua Protocol. Nothing in this folder is part of the site build.
 
+The article is published at [emeditweb.vercel.app/blog/insurance-that-pays-when-the-rain-doesnt-mvua-protocol](https://emeditweb.vercel.app/blog/insurance-that-pays-when-the-rain-doesnt-mvua-protocol).
+
 | File | What it is |
 |---|---|
 | `mvua-protocol-blog-post.md` | Article: "Insurance That Pays When the Rain Doesn't: What I'm Building With Mvua Protocol" (about 1,300 words, Markdown with frontmatter). |
