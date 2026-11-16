@@ -27,6 +27,9 @@ A region is **confirmed** when the season totals correlate at about 0.7 or more 
 | Anambra, Nigeria | 0.36 | 2 of 6 | Not confirmed |
 | Delta, Nigeria | 0.34 | 3 of 6 | Not confirmed |
 | Kano, Nigeria | 0.18 | see below | Not confirmed |
+| Katsina, Nigeria | 0.48 | 2 of 6 | Not confirmed |
+| Sokoto, Nigeria | 0.40 | 2 of 6 | Not confirmed |
+| Rural Kano state, Nigeria | 0.13 | 1 of 6 | Not confirmed |
 
 Nakuru and Dodoma are confirmed and their indices are [frozen on testnet](/docs/methodology/index-methodology#frozen-on-testnet). They are the first pilot candidates.
 
@@ -36,13 +39,15 @@ Nakuru and Dodoma are confirmed and their indices are [frozen on testnet](/docs/
 
 **Southern Nigeria.** Lagos, Anambra and Delta are wet enough that a rainfall shortfall rarely hurts crops, and the datasets disagree there too. These regions are better candidates for a flood or excess rain index later.
 
+**North west Nigeria.** Katsina, Sokoto and a rural site in Kano state were tested because this drier savanna is where a rainfall shortfall is the main crop risk. None pass. The rural Kano site agrees even less than Kano city, so the city result is not an urban effect. ERA5 reads 23 to 42% below CHIRPS across the region and does not capture the short, intense storms of the Sahel well. A Nigerian pilot would need an index calibrated on CHIRPS or rain gauges, with publishers reporting from the same source.
+
 **Dry spells.** Both datasets were also compared on the longest run of dry days in each season. Agreement is weak everywhere (0.23 to 0.45), because ERA5 tends to record light drizzle on dry days. A dry days index therefore needs CHIRPS or rain gauges, not ERA5.
 
 **Why calibration stays on ERA5.** ERA5 reads about 30% below CHIRPS in every region, so the two cannot be mixed. The live publishers report the same ECMWF model family that ERA5 comes from, corroborated by GFS, so calibrating on ERA5 keeps the history and the live data consistent. CHIRPS serves as the independent check.
 
 ## Next candidates
 
-Nigeria's drier north west savanna (Katsina, Sokoto and a rural site in Kano state), where a rainfall shortfall is the main crop risk, is being checked next, followed by candidates in other African countries.
+Regions in other African countries are checked next, using the same test. Nigeria returns as a candidate once a CHIRPS based index and publisher source exist.
 
 ## Reproduce
 
