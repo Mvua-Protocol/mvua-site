@@ -1,0 +1,56 @@
+---
+title: Fees
+description: What share of each premium goes to the data publishers and to the protocol, what running a publisher costs, and why those rates.
+section: Methodology
+sectionOrder: 3
+order: 3
+---
+
+How much of each premium goes to the people who supply the weather data and to running the protocol, and why. The numbers build on the [index methodology](/docs/methodology/index-methodology): its calibrated burning costs and a premium of about 1.5 times the burning cost.
+
+<Callout type="warn" title="Proposal">
+The rates on this page are a proposal for the first pilot. Testnet pools run with fees at zero.
+</Callout>
+
+## How fees work
+
+Each premium is split when it is paid, inside the risk pool contract:
+
+- a **publisher fee**, a share of the gross premium set aside for the publishers who supply the weather data;
+- a **protocol fee**, a share set aside for operating the protocol;
+- the rest, the **net premium**, credited to the pool's reserves, which pay the claims.
+
+## What a publisher costs to run
+
+Per publisher, per region, per year:
+
+| Cost | Amount | Basis |
+| --- | --- | --- |
+| Network fees | at most about 110 XLM | one signed submission a day; real testnet submissions cost 0.23 to 0.37 XLM each |
+| Server | about $15 | a small $5 a month server shared across 4 regions |
+| Weather data licence | depends on the source | see below |
+
+At $0.25 per XLM that is about **$42 a year per region**, before data.
+
+**Data licence.** The publishers' primary source, Open-Meteo, is free for non-commercial use only; commercial use needs a paid plan. Open sources avoid the licence but have their own coverage and delay limits. A publisher must use a source licensed for its use.
+
+## What a publisher earns
+
+With three independent publishers per region (the oracle takes their median), each publisher earns per year, for $100,000 of coverage written in the region:
+
+| Region | Premium | Publisher fee 2% | 3% | 5% | Coverage needed to break even at 3% |
+| --- | --- | --- | --- | --- | --- |
+| Nakuru | 15.6% | $104 | $156 | $259 | $27k |
+| Kano | 5.6% | $37 | $56 | $93 | $76k |
+| Dodoma | 16.3% | $109 | $163 | $272 | $26k |
+| Mbeya | 10.9% | $73 | $109 | $182 | $39k |
+
+The break even point excludes the data licence. At $100 of cover per farmer, $26k to $76k of coverage is about 260 to 760 farmers per region.
+
+## Proposed rates
+
+- **Publisher fee: 3% of the gross premium**, shared equally among the publishers whose readings counted in the season. Publishers break even at a modest pilot size, and the fee grows with the book, so independent operators have a reason to join.
+- **Protocol fee: 2% of the gross premium**, for operating costs: the daily on chain recording of each season's index, monitoring and audits.
+- **Caps: per season.** A cap that counted over a pool's whole life would stop paying fees after its first good seasons, so caps should reset each season. That needs a small contract change before fees are switched on.
+
+Together the fees take 5% of the gross premium. Everything else stays with the pool and the people whose capital backs it.
