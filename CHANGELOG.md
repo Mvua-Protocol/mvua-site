@@ -44,6 +44,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   (the second dataset checks against CHIRPS) and fees (publisher costs, earnings
   and the proposed rates). The FAQ moves to the end of the sidebar, and the
   protocol reference and the FAQ link to the methodology.
+- Choosing pilot regions now covers 36 sites in 12 countries: Choma (Zambia) and
+  Masvingo (Zimbabwe) confirmed, four borderline sites, and why no West African
+  site passes on ERA5.
 - Press folder: the article "Insurance That Pays When the Rain Doesn't" and its
   cover (`press/`, outside the build), with the cover image also served at
   `/press/mvua-protocol-cover.png`.
