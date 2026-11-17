@@ -81,7 +81,7 @@ What the calibration changed:
 
 **Known droughts.** The trigger years should match droughts on record from other sources. Nakuru pays in 2000, 2009 and 2017, all major Kenyan drought years, with 2000 as the full payout. Dodoma pays in 2005 and 2016, the seasons of Tanzania's 2005/06 and 2016/17 droughts, with 2005 as the full payout.
 
-**A second rainfall dataset.** A calibration resting on one dataset can be fooled by that dataset's errors, so each region was checked against CHIRPS, a satellite and rain gauge blend, over the same seasons. Only regions where the two agree are trusted. Nakuru and Dodoma pass; Kano does not. The full comparison, including six more Nigerian sites, none of which pass, is on [Choosing pilot regions](/docs/methodology/pilot-regions).
+**A second rainfall dataset.** A calibration resting on one dataset can be fooled by that dataset's errors, so each region was checked against CHIRPS, a satellite and rain gauge blend, over the same seasons. Only regions where the two agree are trusted. Nakuru and Dodoma pass; Kano does not. The full comparison, 36 sites in 12 countries, is on [Choosing pilot regions](/docs/methodology/pilot-regions).
 
 **Satellite greenness (basis risk).** For each season, the growing season NDVI (a satellite measure of how green the vegetation is, MODIS at 250 m) was compared with the season's rainfall:
 
@@ -127,7 +127,7 @@ The `backtest` tool runs each region's real 34 season sequence and thousands of 
 
 ## Limits
 
-- **Reanalysis, not rain gauges.** ERA5 is a model at about 25 km. It reads about 30% below CHIRPS in every region checked, and Mbeya's series looks suspect: a high mean, and every shortfall after 2015.
+- **Reanalysis, not rain gauges.** ERA5 is a model at about 25 km. It often reads 20 to 40% below CHIRPS, it does not resolve West Africa's storms, and Mbeya's series looks suspect: a high mean, and every shortfall after 2015.
 - **Short history for rare events.** 34 seasons hold only one or two severe droughts per region. Resampling can only repeat droughts that happened, so tail risk is likely understated.
 - **The baseline is fixed.** A changing climate can shift what "normal" means. The baseline should be reviewed on a schedule, and every change recorded as a decision.
 - **No farm level data.** Validation uses known drought years, a second dataset and satellite greenness, not farmers' actual losses.
