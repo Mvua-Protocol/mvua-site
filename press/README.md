@@ -7,6 +7,7 @@ The article is published at [emeditweb.vercel.app/blog/insurance-that-pays-when-
 | File | What it is |
 |---|---|
 | `mvua-protocol-blog-post.md` | Article: "Insurance That Pays When the Rain Doesn't: What I'm Building With Mvua Protocol" (about 1,300 words, Markdown with frontmatter). |
+| `where-rain-data-can-be-trusted.md` | Article: "Two Datasets, 36 Places: Where Rainfall Insurance Can Be Trusted" (about 1,400 words): the second dataset check across 36 sites in 12 countries, why West Africa does not pass yet, and the four regions frozen on testnet. Reuses the existing cover image. |
 | `mvua-protocol-cover.svg` | Editable source of the cover image (1672x941). |
 | `../public/press/mvua-protocol-cover.png` | The cover image, also served at `https://mvua-site.vercel.app/press/mvua-protocol-cover.png`. |
 
