@@ -50,6 +50,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The index methodology and fees pages add Choma (Zambia) and Masvingo
   (Zimbabwe): their data, calibrated thresholds, trigger years against known
   droughts, pricing, ruin probabilities and publisher earnings.
+- Choma and Masvingo are frozen on testnet (indices 3 and 4); the index
+  methodology and pilot regions pages list all four frozen regions.
 - Press folder: the article "Insurance That Pays When the Rain Doesn't" and its
   cover (`press/`, outside the build), with the cover image also served at
   `/press/mvua-protocol-cover.png`.
