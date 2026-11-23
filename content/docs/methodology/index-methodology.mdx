@@ -9,7 +9,7 @@ order: 1
 How Mvua chooses the index for a region, sets its thresholds, checks it against history, and prices it. Every number on this page can be reproduced from public data and code, so the choices can be reviewed and challenged.
 
 <Callout type="warn" title="Testnet only">
-This calibration is the first pass, computed from 34 years of history. Two regions, Nakuru and Dodoma, have their index definitions frozen on Stellar testnet. No pool holding real money uses them, and nothing here is final until a pilot adopts it.
+This calibration is the first pass, computed from 34 years of history. Four regions, Nakuru, Dodoma, Choma and Masvingo, have their index definitions frozen on Stellar testnet. No pool holding real money uses them, and nothing here is final until a pilot adopts it.
 </Callout>
 
 ## What an index has to do
@@ -86,7 +86,7 @@ What the calibration changed:
 
 **Known droughts.** The trigger years should match droughts on record from other sources. Nakuru pays in 2000, 2009 and 2017, all major Kenyan drought years, with 2000 as the full payout. Dodoma pays in 2005 and 2016, the seasons of Tanzania's 2005/06 and 2016/17 droughts, with 2005 as the full payout. Choma and Masvingo pay in Southern Africa's drought seasons: 1991/92 (Masvingo's full payout), 2001/02, 2015/16, 2018/19 and 2023/24, the El Nino season Zambia declared a national disaster (Choma's full payout).
 
-**A second rainfall dataset.** A calibration resting on one dataset can be fooled by that dataset's errors, so each region was checked against CHIRPS, a satellite and rain gauge blend, over the same seasons. Only regions where the two agree are trusted. Nakuru and Dodoma pass; Kano does not. The full comparison, 36 sites in 12 countries, is on [Choosing pilot regions](/docs/methodology/pilot-regions).
+**A second rainfall dataset.** A calibration resting on one dataset can be fooled by that dataset's errors, so each region was checked against CHIRPS, a satellite and rain gauge blend, over the same seasons. Only regions where the two agree are trusted. Nakuru, Dodoma, Choma and Masvingo pass; Kano does not. The full comparison, 36 sites in 12 countries, is on [Choosing pilot regions](/docs/methodology/pilot-regions).
 
 **Satellite greenness (basis risk).** For each season, the growing season NDVI (a satellite measure of how green the vegetation is, MODIS at 250 m) was compared with the season's rainfall:
 
@@ -101,12 +101,14 @@ Seasons where rainfall says drought but greenness does not are where a rainfall 
 
 ## Frozen on testnet
 
-The two regions confirmed by the second dataset have their definitions created on the testnet `trigger-engine`. A definition can never be changed after it is created, which is what freezes it. Each one records the SHA-256 of the exact data file it was calibrated from.
+The four regions confirmed by the second dataset have their definitions created on the testnet `trigger-engine`. A definition can never be changed after it is created, which is what freezes it. Each one records the SHA-256 of the exact data file it was calibrated from.
 
 | Index | Region | Season | Baseline (scaled) | Trigger | Exhaustion |
 | --- | --- | --- | --- | --- | --- |
 | 1 | Nakuru `KE_NAK` | 92 days from 1 March | 22814 (228.14 mm) | 59% | 18% |
 | 2 | Dodoma `TZ_DOD` | 151 days from 1 December | 40775 (407.75 mm) | 69% | 51.5% |
+| 3 | Choma `ZM_CHO` | 151 days from 1 November | 78625 (786.25 mm) | 80% | 43.5% |
+| 4 | Masvingo `ZW_MAS` | 151 days from 1 November | 55988 (559.88 mm) | 67.5% | 56% |
 
 See the [testnet deployment](/docs/reference/deployment) for the contract addresses.
 
