@@ -47,6 +47,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Choosing pilot regions now covers 36 sites in 12 countries: Choma (Zambia) and
   Masvingo (Zimbabwe) confirmed, four borderline sites, and why no West African
   site passes on ERA5.
+- The index methodology and fees pages add Choma (Zambia) and Masvingo
+  (Zimbabwe): their data, calibrated thresholds, trigger years against known
+  droughts, pricing, ruin probabilities and publisher earnings.
 - Press folder: the article "Insurance That Pays When the Rain Doesn't" and its
   cover (`press/`, outside the build), with the cover image also served at
   `/press/mvua-protocol-cover.png`.
